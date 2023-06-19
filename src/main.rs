@@ -14,15 +14,17 @@ fn main() {
 
 
         let mut number: String = String::new();
-        let mut guess: Guess = Guess::new(io::stdin().read_line(&mut number).unwrap() as i32);
+        io::stdin().read_line(&mut number).unwrap();
         // parsing number from string, assigning to guess
-        let guess: i32 = match number.trim().parse() {
+        let guess_num: i32 = match number.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
         };
 
+        let guess: Guess = Guess::new(guess_num);
+
         println!("number value: {number}");
-        match guess.cmp(&secret_number) {
+        match guess.value().cmp(&secret_number) {
             Ordering::Less => println!("Too small!"),
             Ordering::Greater => println!("Too big!"),
             Ordering::Equal => {
